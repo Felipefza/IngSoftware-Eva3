@@ -21,7 +21,7 @@ cd IngSoftware-Eva3
 ```
 python3 -m venv .venv
 source ./.venv/bin/activate
-pip install django
+pip install -r requerimientos.txt
 python3 manage runserver
 ```
 
@@ -29,7 +29,7 @@ python3 manage runserver
 ```
 python -m venv .venv
 ./.venv/Scripts/activate
-pip install django
+pip install -r requerimientos.txt
 python manage runserver
 ```
 
