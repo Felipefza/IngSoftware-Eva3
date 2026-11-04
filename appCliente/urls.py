@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.urls import path
 
-from appCliente.views import inicio
+from appCliente.views import inicio, login_page
 
 urlpatterns = [
-    path(route='', view=inicio, name='inicio')
+    path(route='', view=inicio, name='inicio'),
+    path(route='login/', view=login_page, name='login'),
 ]
