@@ -17,7 +17,8 @@ def cambio_etapas(request: HttpRequest) -> HttpResponse:
     estado_activo: Estado_Activo | None = Estado_Activo.objects.first()
 
     try:
-        assert type(estado_activo) == Estado
+        assert      estado_activo
+        assert type(estado_activo.estado_id) == Estado
 
         estado = estado_activo.estado_id
 
@@ -39,17 +40,17 @@ def cambio_etapas(request: HttpRequest) -> HttpResponse:
         estado_siguiente_id: int = estado_id + 1
         estado_anterior_id:  int = estado_id - 1
 
-        nuevo_estado_siguiente: Estado | None = Estado.objects.get(id=estado_siguiente_id)
-        nuevo_estado_anterior:  Estado | None = Estado.objects.get(id=estado_anterior_id)
+        nuevo_estado_siguiente: Estado | None = Estado.objects.filter(id=estado_siguiente_id).first()
+        nuevo_estado_anterior:  Estado | None = Estado.objects.filter(id=estado_anterior_id ).first()
 
         if nuevo_estado_siguiente is None:
-            nuevo_estado_siguiente = Estado.objects.first()
+            estado_siguiente = Estado.objects.first()
         else:
             estado_siguiente = nuevo_estado_siguiente
 
 
         if nuevo_estado_anterior is None:
-            nuevo_estado_anterior = Estado.objects.last()
+            estado_anterior = Estado.objects.last()
         else:
             estado_anterior = nuevo_estado_anterior
 
