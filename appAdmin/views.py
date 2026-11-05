@@ -11,16 +11,13 @@ from appCliente.models import Estado, Estado_Activo
 
 def cambio_etapas(request: HttpRequest) -> HttpResponse:
     estado: Estado | ForeignKey
+
+    # Obtener estado activo
     estado_activo: Estado_Activo | None = Estado_Activo.objects.first()
 
-    if estado_activo is None:
-        estado = get_object_or_404(Estado, numero_etapa=1)
-
-        nuevo_estado_activo: Estado_Activo = Estado_Activo(estado_id=estado)
-        nuevo_estado_activo.save()
-
-    else:
-        estado = estado_activo.estado_id
+    # Si o si va a haber un estado activo
+    assert estado_activo
+    estado = estado_activo.estado_id
 
 
     contexto: dict[Any, Any] = {
