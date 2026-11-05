@@ -9,7 +9,7 @@ from appCliente.models import Estado, Estado_Activo
 # Create your views here.
 
 
-def admin_page(request: HttpRequest) -> HttpResponse:
+def cambio_etapas(request: HttpRequest) -> HttpResponse:
     estado: Estado | ForeignKey
     estado_activo: Estado_Activo | None = Estado_Activo.objects.first()
 
@@ -29,4 +29,9 @@ def admin_page(request: HttpRequest) -> HttpResponse:
         'estado_anterior':  estado,
     }
 
-    return render(request=request, template_name='administracion.html', context=contexto)
+    return render(request=request, template_name='cambio_etapas.html', context=contexto)
+
+
+def editor_etapas(request: HttpRequest) -> HttpResponse:
+    return render(request=request, template_name='editor_etapas.html')
+

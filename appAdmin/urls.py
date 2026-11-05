@@ -19,5 +19,6 @@ from django.urls import path
 from appAdmin.views import admin_page
 
 urlpatterns = [
-    path(route='administracion', view=admin_page, name='admin_page'),
+    path(route='', view=admin_page, name='admin_page'),
+    path(route='cambio-etapas', view=admin_page, name='cambio_etapas_page'),
 ]
