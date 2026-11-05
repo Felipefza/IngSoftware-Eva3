@@ -39,7 +39,7 @@ def login_page(request: HttpRequest) -> HttpResponse:
         if user is not None:
             login(request, user)
             print('USER AUTENTIFICATED')
-            return redirect('admin_page')
+            return redirect('cambio_etapas_page')
         else:
             print('NOT USER AUTENTIFICATED')
 

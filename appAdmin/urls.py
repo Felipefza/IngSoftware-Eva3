@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.urls import path
 
-from appAdmin.views import admin_page
+from appAdmin.views import cambio_etapas, editor_etapas
 
 urlpatterns = [
-    path(route='', view=admin_page, name='admin_page'),
-    path(route='cambio-etapas', view=admin_page, name='cambio_etapas_page'),
+    path(route='cambio-etapas', view=cambio_etapas, name='cambio_etapas_page'),
+    path(route='editor-etapas', view=editor_etapas, name='editor_etapas_page'),
 ]
