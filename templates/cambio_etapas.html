@@ -35,15 +35,18 @@
         </div>
 
         <main class="container d-flex align-items-end mt-3 w-100 text-center">
+            <form id="cambio-etapa" action="{% url 'cambio_etapas_page' %}" method="post">
+                {% csrf_token %}
+            </form>
 
-            <div class="card border-0 rounded-4 p-3" style="background-color: #e9b87e; max-width: 10rem; max-height: 10rem;">
-                <p class="fs-3 mb-0">
-                    {{ estado_anterior.titulo_estado }}
-                </p>
+            <div class="card border-0 rounded-4" style="background-color: #e9b87e; max-width: 10rem; max-height: 10rem;">
+                <button class="btn w-100 h-100 p-3" type="submit" form="cambio-etapa" name="etapa" value="{{ estado_anterior.pk }}">
+                    <p class="fs-3 mb-0">
+                        {{ estado_anterior.titulo_estado }}
+                    </p>
 
-                <a href="#" class="btn stretched-link">
                     <i class="bi bi-arrow-left-square-fill fs-1"></i>
-                </a>
+                </button>
             </div>
 
             <div class="container rounded-4" style="background-color: #e9b87e; max-width: 30rem; max-height: 30rem;">
@@ -63,14 +66,14 @@
                 </div>
             </div>
 
-            <div class="card border-0 rounded-4 p-3" style="background-color: #e9b87e; max-width: 10rem; max-height: 10rem;">
-                <p class="fs-3 mb-0">
-                    {{ estado_siguiente.titulo_estado }}
-                </p>
+            <div class="card border-0 rounded-4" style="background-color: #e9b87e; max-width: 10rem; max-height: 10rem;">
+                <button class="btn w-100 h-100 p-3" type="submit" form="cambio-etapa" name="etapa" value="{{ estado_siguiente.pk }}">
+                    <p class="fs-3 mb-0">
+                        {{ estado_siguiente.titulo_estado }}
+                    </p>
 
-                <a href="#" class="btn stretched-link">
                     <i class="bi bi-arrow-right-square-fill fs-1"></i>
-                </a>
+                </button>
             </div>
         </main>
     </body>

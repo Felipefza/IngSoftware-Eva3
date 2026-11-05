@@ -10,21 +10,45 @@ from appCliente.models import Estado, Estado_Activo
 
 
 def cambio_etapas(request: HttpRequest) -> HttpResponse:
+    estado_activo: Estado_Activo | None = Estado_Activo.objects.first()
+
     estado:           Estado
     estado_siguiente: Estado
     estado_anterior:  Estado
 
-    estado_activo: Estado_Activo | None = Estado_Activo.objects.first()
-
     try:
-        assert      estado_activo
-        assert type(estado_activo.estado_id) == Estado
+        assert      estado_activo, 'Estado activo es nulo'
+        assert type(estado_activo.estado_id) == Estado, 'estado_id no es Estado'
 
         estado = estado_activo.estado_id
 
     except AssertionError as e:
-        print(f'AssertionError: {e}')
+        print(f'AssertionError {e}')
         return redirect('editor_etapas_page')
+
+    # COMIENZO DEL POST
+
+    if request.method == 'POST':
+        etapa: int | None | object = request.POST.get(key='etapa', default=None)
+        etapa_estado: Estado | None = Estado.objects.filter(pk=etapa).first()
+
+        try:
+            assert type(etapa_estado) == Estado, 'etapa no es Estado'
+
+            estado_activo.delete()
+
+            estado_activo = Estado_Activo(estado_id=etapa_estado)
+            estado_activo.save()
+
+            assert type(estado_activo.estado_id) == Estado, 'estado_id no es Estado'
+            estado = estado_activo.estado_id
+
+        except AssertionError as e:
+            print(f'AssertionError {e}')
+
+    # FIN DEL POST
+
+    # COMIENZO DEL GET
 
     cantidad_estados: int = Estado.objects.all().count()
 
