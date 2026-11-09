@@ -43,3 +43,6 @@ def login_page(request: HttpRequest) -> HttpResponse:
             logger.warning('Intento fallido de autenticación para el usuario: %s', username)
 
     return render(request=request, template_name='login.html')
+
+def contacto(request: HttpRequest) -> HttpResponse:
+  return render(request=request, template_name='contacto.html')
