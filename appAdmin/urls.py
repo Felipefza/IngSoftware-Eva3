@@ -16,11 +16,18 @@ Including another URLconf
 """
 from django.urls import path
 
-from appAdmin.views import cambio_etapas, editor_etapas, eliminar_etapa, modificar_etapa
+from appAdmin.views import (
+    cambio_etapas,
+    crear_etapa,
+    editor_etapas,
+    eliminar_etapa,
+    modificar_etapa,
+)
 
 urlpatterns = [
     path(route='cambio-etapas', view=cambio_etapas, name='cambio_etapas_page'),
     path(route='editor-etapas', view=editor_etapas, name='editor_etapas_page'),
-    path(route='modificar-etapa', view=modificar_etapa, name='modificar_etapa'),
-    path(route='eliminar-etapa',  view=eliminar_etapa, name='eliminar_etapa'),
+    path(route='crear-etapa', view=crear_etapa, name='crear_etapa_page'),
+    path(route='modificar-etapa', view=modificar_etapa, name='modificar_etapa_page'),
+    path(route='eliminar-etapa',  view=eliminar_etapa, name='eliminar_etapa_page'),
 ]

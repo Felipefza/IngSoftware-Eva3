@@ -5,6 +5,7 @@ from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
+from appAdmin.forms import Estado_Form
 from appCliente.models import Estado, Estado_Activo
 
 logger = logging.getLogger(__name__)
@@ -84,18 +85,52 @@ def editor_etapas(request: HttpRequest) -> HttpResponse:
 
 
 def crear_etapa(request: HttpRequest) -> HttpResponse:
-  if request.method == 'POST':
-    num = request.POST.get('numero_etapa')
-    titulo = request.POST.get('titulo_estado')
-    desc = request.POST.get('descripcion_estado')
-    Estado.objects.create(
-        numero_etapa=num, titulo_estado=titulo, descripcion_estado=desc
-    )
-    return redirect('editor_etapas_page')
-  return render(request, 'crear_etapa.html')
+    if request.method == 'POST':
+        estado_form: Estado_Form = Estado_Form(request.POST)
+        if estado_form.is_valid():
+            estado_form.save()
+        else:
+            estado_form = Estado_Form()
+            return render(request, 'crear_etapa.html')
+
+        return redirect('editor_etapas_page')
+    return render(request, 'crear_etapa.html')
+
 
 def modificar_etapa(request: HttpRequest) -> HttpResponse:
-    return redirect('editor_etapas_page')
+    pk: int | None | object
+    estado_cambiar: Estado
+    contexto = {}
+
+    if request.method == 'GET':
+        pk = request.GET.get('pk')
+
+        if pk is None:
+            return redirect('editor_etapas_page')
+
+        estado_cambiar = Estado.objects.get(pk=pk)
+        contexto['estado'] = estado_cambiar
+
+
+    if request.method == 'POST':
+        pk = request.POST.get('pk')
+
+        if pk is None:
+            return redirect('editor_etapas_page')
+
+        estado_cambiar = Estado.objects.get(pk=pk)
+        contexto['estado'] = estado_cambiar
+
+        estado_form: Estado_Form = Estado_Form(data=request.POST, instance=estado_cambiar)
+
+        if estado_form.is_valid():
+            estado_form.save()
+        else:
+            estado_form = Estado_Form()
+            return render(request, 'modificar_etapa.html', contexto)
+
+        return redirect('editor_etapas_page')
+    return render(request, 'modificar_etapa.html', contexto)
 
 def eliminar_etapa(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':

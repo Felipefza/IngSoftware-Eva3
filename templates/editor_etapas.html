@@ -54,7 +54,7 @@
                                         <div class="container d-flex justify-content-end">
                                             {% if est.numero_etapa != etapa_activa.estado_id.numero_etapa %}
                                             <!-- Botón de Eliminar -->
-                                            <form method="post" action="{% url 'eliminar_etapa' %}">
+                                            <form method="get" action="{% url 'eliminar_etapa_page' %}">
                                                 {% csrf_token %}
                                                 <button class="btn btn-outline-danger text-danger text-decoration-none" title="Eliminar" name="numero_etapa" value="{{ est.numero_etapa }}">
                                                     <i class="bi bi-trash-fill fs-5"></i>
@@ -62,9 +62,9 @@
                                             </form>
                                             {% endif %}
                                             <!-- Botón de Editar -->
-                                            <form method="post" action="{% url 'modificar_etapa' %}">
+                                            <form method="get" action="{% url 'modificar_etapa_page' %}">
                                                 {% csrf_token %}
-                                                <button class="btn btn-outline-success text-success text-decoration-none me-3" title="Editar" name="numero_etapa" value="{{ est.numero_etapa }}">
+                                                <button class="btn btn-outline-success text-success text-decoration-none me-3" title="Editar" name="pk" value="{{ est.pk }}">
                                                     <i class="bi bi-pencil-fill fs-5"></i>
                                                 </button>
                                             </form>
@@ -82,9 +82,12 @@
 
                 <!-- Botón para agregar nueva etapa -->
                 <div class="text-center mt-4">
-                    <a href="#" class="btn rounded-3 px-5 py-2 fw-bold text-white shadow-sm" style="background-color: #673117; font-size: 1.5rem;" title="Agregar Etapa">
-                        +
-                    </a>
+                    <form method="get" action="{% url 'crear_etapa_page' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn rounded-3 px-5 py-2 fw-bold text-white shadow-sm" style="background-color: #673117; font-size: 1.5rem;" title="Agregar Etapa">
+                            +
+                        </button>
+                    </form>
                 </div>
 
             </div>
