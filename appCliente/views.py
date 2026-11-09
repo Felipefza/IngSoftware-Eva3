@@ -1,10 +1,10 @@
-from typing import Any
 import logging
+from typing import Any
 
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Estado, Estado_Activo
 
@@ -46,3 +46,7 @@ def login_page(request: HttpRequest) -> HttpResponse:
 
 def contacto(request: HttpRequest) -> HttpResponse:
   return render(request=request, template_name='contacto.html')
+
+def logout_page(request: HttpRequest) -> HttpResponse:
+    logout(request)
+    return redirect('inicio')

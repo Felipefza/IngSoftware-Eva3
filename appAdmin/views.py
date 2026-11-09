@@ -1,8 +1,10 @@
-from typing import Any
 import logging
+from typing import Any
 
+from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
+
 from appCliente.models import Estado, Estado_Activo
 
 logger = logging.getLogger(__name__)
@@ -43,7 +45,7 @@ def cambio_etapas(request: HttpRequest) -> HttpResponse:
 
     return redirect(
         'cambio_etapas_page'
-    ) 
+    )
 
   # COMIENZO DEL GET
   cantidad_estados: int = Estado.objects.count()
@@ -76,7 +78,8 @@ def cambio_etapas(request: HttpRequest) -> HttpResponse:
 
 def editor_etapas(request: HttpRequest) -> HttpResponse:
   estados = Estado.objects.all().order_by('numero_etapa')
-  contexto = {'estados': estados}
+  etapa_activa = Estado_Activo.objects.all().first()
+  contexto = {'estados': estados, 'etapa_activa': etapa_activa}
   return render(request=request, template_name='editor_etapas.html', context=contexto)
 
 
@@ -90,3 +93,23 @@ def crear_etapa(request: HttpRequest) -> HttpResponse:
     )
     return redirect('editor_etapas_page')
   return render(request, 'crear_etapa.html')
+
+def modificar_etapa(request: HttpRequest) -> HttpResponse:
+    return redirect('editor_etapas_page')
+
+def eliminar_etapa(request: HttpRequest) -> HttpResponse:
+    if request.method == 'POST':
+        estado_cantidad: int = Estado.objects.count()
+
+        if estado_cantidad < 2:
+            return redirect('editor_etapas_page')
+
+        num = request.POST.get('numero_etapa')
+
+        if num is None:
+            return redirect('editor_etapas_page')
+
+        etapa_a_eliminar: Estado = Estado.objects.get(numero_etapa=num)
+        etapa_a_eliminar.delete()
+
+    return redirect('editor_etapas_page')

@@ -19,11 +19,27 @@
                     <li class="nav-item">
                         <a class="nav-link fs-4" href="/contacto/">Contacto</a>
                     </li>
+                    {% if user.is_staff %}
                     <li class="nav-item">
-                        <a class="nav-link fs-4" href="/login/">
+                        <a class="nav-link fs-4" href="{% url 'cambio_etapas_page' %}">Cambio de Etapas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-4" href="{% url 'editor_etapas_page' %}">Editor de Etapas</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link fs-4" href="{% url 'logout' %}">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link fs-4" href="{% url 'login' %}">
                             <i class="bi bi-person-circle fs-3"></i>
                         </a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

@@ -16,7 +16,7 @@
         <!-- INICIO CSS -->
         <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
     </head>
-    <body class="position-relative" style="background-color: #673117; min-height: 100vh; min-width: 100vw; overflow-x: hidden;">
+    <body class="position-relative" style="background-color: #ffe0a5; min-height: 100vh; min-width: 100vw; overflow-x: hidden;">
 
         <!-- Barra de navegación compartida -->
         {% include 'navegacion.html' %}
@@ -24,15 +24,15 @@
         <!-- Título principal -->
         <div class="d-flex flex-column fw-bold justify-content-center w-100 text-center my-4">
             <div class="container">
-                <p class="text-break mb-0" style="color: #f4d0a0; font-size: 4.5rem; letter-spacing: 2px;">EDITOR DE</p>
-                <p class="text-center text-white" style="font-size: 4.5rem; letter-spacing: 2px;">ETAPAS</p>
+                <p class="text-break mb-0" style="color: #673117; font-size: 4.5rem; letter-spacing: 2px;">EDITOR DE</p>
+                <p class="text-center" style="font-size: 4.5rem; letter-spacing: 2px;">ETAPAS</p>
             </div>
         </div>
 
         <!-- Tabla y Botón de Agregar -->
         <main class="container d-flex flex-column align-items-center pb-5">
             <div class="card border-0 rounded-4 p-4 w-75 shadow-lg" style="background-color: #e9b87e;">
-                
+
                 <div class="table-responsive">
                     <table class="table align-middle mb-0" style="background-color: transparent;">
                         <thead>
@@ -50,14 +50,25 @@
                                     <td class="fw-bold py-3" style="color: #673117;">{{ est.titulo_estado }}</td>
                                     <td class="py-3" style="color: #4a2310;">{{ est.descripcion_estado }}</td>
                                     <td class="text-end py-3">
-                                        <!-- Botón de Editar -->
-                                        <a href="#" class="text-dark text-decoration-none me-3" title="Editar">
-                                            <i class="bi bi-pencil-fill fs-5"></i>
-                                        </a>
-                                        <!-- Botón de Eliminar -->
-                                        <a href="#" class="text-danger text-decoration-none" title="Eliminar">
-                                            <i class="bi bi-trash-fill fs-5"></i>
-                                        </a>
+
+                                        <div class="container d-flex justify-content-end">
+                                            {% if est.numero_etapa != etapa_activa.estado_id.numero_etapa %}
+                                            <!-- Botón de Eliminar -->
+                                            <form method="post" action="{% url 'eliminar_etapa' %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-outline-danger text-danger text-decoration-none" title="Eliminar" name="numero_etapa" value="{{ est.numero_etapa }}">
+                                                    <i class="bi bi-trash-fill fs-5"></i>
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                            <!-- Botón de Editar -->
+                                            <form method="post" action="{% url 'modificar_etapa' %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-outline-success text-success text-decoration-none me-3" title="Editar" name="numero_etapa" value="{{ est.numero_etapa }}">
+                                                    <i class="bi bi-pencil-fill fs-5"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             {% empty %}
