@@ -26,8 +26,6 @@ Borrar los comentarios de panaderia/settings.py y comentar la sección de MySQL.
 
 Por temas de facilitar el uso del proyecto, al iniciar el servidor con runserver, si no hay usuarios en la base de datos, se crea por defecto el administrador.
 
-Por defecto están encriptadas en la BD.
-
 ### Credenciales
 
 #### Nombre
