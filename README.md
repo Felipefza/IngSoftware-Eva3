@@ -22,6 +22,18 @@ Borrar los comentarios de panaderia/settings.py y comentar la sección de MySQL.
 
 ![Cambiar la Base de datos](recursos/database.png)
 
+Ademas se crea una etapa por defecto, con las siguientes caracteristicas:
+
+#### Numero de Etapa
+1
+
+#### Titulo
+titulo
+
+#### Descripcion
+descripcion
+
+
 ## Usuario Administrador
 
 Por temas de facilitar el uso del proyecto, al iniciar el servidor con runserver, si no hay usuarios en la base de datos, se crea por defecto el administrador.
