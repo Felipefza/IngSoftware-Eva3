@@ -22,7 +22,8 @@ Borrar los comentarios de panaderia/settings.py y comentar la sección de MySQL.
 
 ![Cambiar la Base de datos](recursos/database.png)
 
-Ademas se crea una etapa por defecto, con las siguientes caracteristicas:
+### Estado por Defecto
+Ademas se crea un Estado por defecto, con las siguientes caracteristicas:
 
 #### Numero de Etapa
 1
