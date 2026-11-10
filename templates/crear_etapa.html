@@ -35,7 +35,7 @@
             </div>
         </div>
         <main class="container d-flex flex-column align-items-center p-5 rounded" style="max-width: 30rem; background-color: #673117;">
-            <form method="post" action="{% url 'modificar_etapa_page' %}" class="w-100">
+            <form method="post" action="{% url 'crear_etapa_page' %}" class="w-100">
                 {% csrf_token %}
                 <label for="numero_etapa" class="text-white">Numero de Etapa</label>
                 <input id="numero_etapa" class="form-control mb-3" name="numero_etapa">

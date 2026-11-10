@@ -92,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_panaderia',
         'USER': 'root',
-        'PASSWORD': 'admin123',
+        'PASSWORD': 'Holafelipe01.',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {

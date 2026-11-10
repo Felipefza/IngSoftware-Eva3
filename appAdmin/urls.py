@@ -25,6 +25,7 @@ from appAdmin.views import (
 )
 
 urlpatterns = [
+    path(route='', view=cambio_etapas, name='inicio_admin'),
     path(route='cambio-etapas', view=cambio_etapas, name='cambio_etapas_page'),
     path(route='editor-etapas', view=editor_etapas, name='editor_etapas_page'),
     path(route='crear-etapa', view=crear_etapa, name='crear_etapa_page'),

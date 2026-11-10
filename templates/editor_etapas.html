@@ -54,7 +54,7 @@
                                         <div class="container d-flex justify-content-end">
                                             {% if est.numero_etapa != etapa_activa.estado_id.numero_etapa %}
                                             <!-- Botón de Eliminar -->
-                                            <form method="get" action="{% url 'eliminar_etapa_page' %}">
+                                            <form method="post" action="{% url 'eliminar_etapa_page' %}">
                                                 {% csrf_token %}
                                                 <button class="btn btn-outline-danger text-danger text-decoration-none" title="Eliminar" name="numero_etapa" value="{{ est.numero_etapa }}">
                                                     <i class="bi bi-trash-fill fs-5"></i>

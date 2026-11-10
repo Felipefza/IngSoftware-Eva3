@@ -3,12 +3,38 @@ from typing import Any
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.db import ProgrammingError
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Estado, Estado_Activo
 
 logger = logging.getLogger(__name__)
+
+try:
+    cantidad_usuarios: int = User.objects.all().count()
+    if cantidad_usuarios < 1:
+        admin_placeholder: User = User(username='admin')
+        admin_placeholder.is_staff = True
+        admin_placeholder.set_password('admin')
+        admin_placeholder.save()
+        logger.info('Usuario administrador creado como placeholder')
+except ProgrammingError:
+    logger.info('Base de datos No Existe, favor de crear y migrar')
+
+try:
+    cantidad_estados: int = User.objects.all().count()
+    if cantidad_estados < 1:
+        estado_placeholder: Estado = Estado(numero_etapa=1, titulo_estado='titulo', descripcion_estado='descripción')
+        estado_placeholder.save()
+        logger.info('Estado creado como placeholder')
+
+        estado_activo_placeholder: Estado_Activo = Estado_Activo(estado_id=estado_placeholder)
+        estado_activo_placeholder.save()
+        logger.info('Estado Activo creado como placeholder')
+except ProgrammingError:
+    logger.info('Base de datos No Existe, favor de crear y migrar')
+
 
 # Create your views here.
 

@@ -1,7 +1,8 @@
 import logging
 from typing import Any
 
-from django.db.models import QuerySet
+from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
@@ -10,7 +11,7 @@ from appCliente.models import Estado, Estado_Activo
 
 logger = logging.getLogger(__name__)
 
-
+@login_required(login_url="/login/")
 def cambio_etapas(request: HttpRequest) -> HttpResponse:
   estado_activo: Estado_Activo | None = Estado_Activo.objects.first()
 
@@ -77,6 +78,7 @@ def cambio_etapas(request: HttpRequest) -> HttpResponse:
   return render(request=request, template_name='cambio_etapas.html', context=contexto)
 
 
+@login_required(login_url="/login/")
 def editor_etapas(request: HttpRequest) -> HttpResponse:
   estados = Estado.objects.all().order_by('numero_etapa')
   etapa_activa = Estado_Activo.objects.all().first()
@@ -84,11 +86,17 @@ def editor_etapas(request: HttpRequest) -> HttpResponse:
   return render(request=request, template_name='editor_etapas.html', context=contexto)
 
 
+@login_required(login_url="/login/")
 def crear_etapa(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         estado_form: Estado_Form = Estado_Form(request.POST)
+
         if estado_form.is_valid():
-            estado_form.save()
+            try:
+                estado_form.save()
+            except IntegrityError:
+                estado_form = Estado_Form()
+                return render(request, 'crear_etapa.html')
         else:
             estado_form = Estado_Form()
             return render(request, 'crear_etapa.html')
@@ -97,6 +105,7 @@ def crear_etapa(request: HttpRequest) -> HttpResponse:
     return render(request, 'crear_etapa.html')
 
 
+@login_required(login_url="/login/")
 def modificar_etapa(request: HttpRequest) -> HttpResponse:
     pk: int | None | object
     estado_cambiar: Estado
@@ -124,7 +133,11 @@ def modificar_etapa(request: HttpRequest) -> HttpResponse:
         estado_form: Estado_Form = Estado_Form(data=request.POST, instance=estado_cambiar)
 
         if estado_form.is_valid():
-            estado_form.save()
+            try:
+                estado_form.save()
+            except IntegrityError:
+                estado_form = Estado_Form()
+                return render(request, 'modificar_etapa.html', contexto)
         else:
             estado_form = Estado_Form()
             return render(request, 'modificar_etapa.html', contexto)
@@ -132,6 +145,7 @@ def modificar_etapa(request: HttpRequest) -> HttpResponse:
         return redirect('editor_etapas_page')
     return render(request, 'modificar_etapa.html', contexto)
 
+@login_required(login_url="/login/")
 def eliminar_etapa(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         estado_cantidad: int = Estado.objects.count()
